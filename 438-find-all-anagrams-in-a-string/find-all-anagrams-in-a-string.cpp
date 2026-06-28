@@ -6,20 +6,27 @@ public:
         int n = s.length();
         int k = p.length();
 
-        vector<int> pCount(26,0);
+        if(k>n) return res;
 
-        for(char c : p){
-            pCount[c - 'a']++;
+        vector<int> pCount(26,0);
+        vector<int> sCount(26,0);
+
+        for(char x : p){
+            pCount[x - 'a']++;
         }
 
-        for(int i=0;i<=n-k;i++){
-            vector<int> sCount(26,0);
+        // First Pass
+        for(int i=0;i<k;i++){
+            sCount[s[i] - 'a']++;
+        }
 
-            for(int j=i;j<i+k;j++){
-                sCount[s[j] - 'a']++;
-            }
+        if(pCount == sCount) res.push_back(0);
 
-            if(pCount == sCount) res.push_back(i);
+        for(int i=k;i<n;i++){
+            sCount[s[i] - 'a']++;   // Add next element
+            sCount[s[i-k] - 'a']--;     // Remove previous element
+
+            if(pCount == sCount) res.push_back(i-k+1);
         }
         return res;
     }
