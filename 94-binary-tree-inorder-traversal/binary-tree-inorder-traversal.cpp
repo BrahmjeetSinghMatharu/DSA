@@ -15,20 +15,27 @@ public:
         vector<int> res;
         if(root == NULL) return res;
 
-        stack<TreeNode*> st;
-        TreeNode* node = root;
+        TreeNode* curr = root;
 
-        while(true){
-            if(node != NULL){
-                st.push(node);
-                node = node->left;
+        while(curr != NULL){
+            // Case 1 : When there is no left node
+            if(curr->left == NULL){
+                res.push_back(curr->val);
+                curr = curr->right;
             }
+            // Case 2 : When the left node is present
             else{
-                if(st.empty() == true) break;
-                node = st.top();
-                st.pop();
-                res.push_back(node->val);
-                node = node->right;
+                TreeNode* leftChild = curr->left;
+
+                while(leftChild->right != NULL){
+                    leftChild = leftChild->right;
+                }
+
+                leftChild->right = curr;
+                // We can delete the curr->left
+                TreeNode* temp = curr;
+                curr = curr->left;
+                temp->left = NULL;
             }
         }
         return res;
