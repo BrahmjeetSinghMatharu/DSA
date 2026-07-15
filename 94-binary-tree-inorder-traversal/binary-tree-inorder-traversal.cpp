@@ -25,17 +25,23 @@ public:
             }
             // Case 2 : When the left node is present
             else{
-                TreeNode* leftChild = curr->left;
+                TreeNode* prev = curr->left;
 
-                while(leftChild->right != NULL){
-                    leftChild = leftChild->right;
+                while(prev->right && prev->right != curr){
+                    prev = prev->right;
                 }
 
-                leftChild->right = curr;
-                // We can delete the curr->left
-                TreeNode* temp = curr;
-                curr = curr->left;
-                temp->left = NULL;
+                // Making the thread
+                if(prev->right == NULL){
+                    prev->right = curr;
+                    curr = curr->left;
+                }
+                // Destroying the thread
+                else{
+                    prev->right = NULL;
+                    res.push_back(curr->val); 
+                    curr = curr->right;
+                }
             }
         }
         return res;
