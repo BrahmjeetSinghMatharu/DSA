@@ -9,23 +9,40 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> preorder;
-        if(root == NULL) return preorder;
+        vector<int> res;
+        if(root == NULL) return res;
 
-        stack<TreeNode*> st;
-        st.push(root);
+        TreeNode* curr = root;
 
-        while(!st.empty()){
-            TreeNode* node = st.top();
-            st.pop();
-            preorder.push_back(node->val);
-            if(node->right != NULL) st.push(node->right);
-            if(node->left != NULL) st.push(node->left);
+        while(curr != NULL){
+            // Case 1 : no left exists
+            if(curr->left == NULL){
+                res.push_back(curr->val);
+                curr = curr->right;
+            }
+            // Case 2 : when left exists
+            else{
+                TreeNode* prev = curr->left;
+                while(prev->right && prev->right != curr){
+                    prev = prev->right;
+                }
+
+                // Make the thread
+                if(prev->right == NULL){
+                    prev->right = curr;
+                    res.push_back(curr->val);
+                    curr = curr->left;
+                }
+                // Destroying the thread
+                else{
+                    prev->right = NULL;
+                    curr = curr->right;
+                }
+            }
         }
-        return preorder;
+        return res;
     }
 };
