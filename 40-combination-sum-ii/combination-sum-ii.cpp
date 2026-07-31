@@ -13,6 +13,8 @@ public:
                 continue;
             }
 
+            if(target-candidates[i] < 0) break;
+
             ds.push_back(candidates[i]);
             solve(i+1,target-candidates[i],ds,ans,candidates);
             ds.pop_back();
