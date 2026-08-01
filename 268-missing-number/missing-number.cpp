@@ -2,11 +2,11 @@ class Solution {
 public:
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
-        int x = n;
-        for(int i=0;i<n;i++){
-            x ^= i;
-            x ^= nums[i];
+        int sum = (n*(n+1))/2;
+
+        for(int x : nums){
+            sum -= x;
         }
-        return x;
+        return sum;
     }
 };
