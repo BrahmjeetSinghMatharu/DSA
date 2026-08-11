@@ -56,6 +56,7 @@ public:
             else{
                 break;
             }
+            delete temp;
         }
         return {start,end};
     }
