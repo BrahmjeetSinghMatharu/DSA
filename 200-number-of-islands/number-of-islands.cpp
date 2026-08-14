@@ -8,14 +8,14 @@ public:
         q.push({i,j});
         vis[i][j] = true;
 
+        vector<vector<int>> directions = {{1,0},{0,1},{-1,0},{0,-1}};
+
         while(!q.empty()){
             auto it = q.front();
             q.pop();
 
             int x = it.first;
             int y = it.second;
-
-            vector<vector<int>> directions = {{1,0},{0,1},{-1,0},{0,-1}};
 
             for(auto& dir : directions){
                 int new_x = x + dir[0];
