@@ -1,25 +1,56 @@
 class Solution {
 public:
-    void dfs(int& i,vector<bool>& vis,vector<vector<int>>& isConnected){
-        vis[i] = true;
+    vector<int> parent,rank;
 
-        for(int j=0;j<isConnected[i].size();j++){
-            if(!vis[j] && isConnected[i][j] == 1) dfs(j,vis,isConnected);
+    int findParent(int x){
+        if(parent[x] == x) return x;
+        return parent[x] = findParent(parent[x]);
+    }
+
+    void unionSet(int u,int v){
+        u = findParent(u);
+        v = findParent(v);
+
+        if(u == v) return;
+
+        if(rank[u] < rank[v]){
+            parent[u] = v;
+        }
+        else if(rank[u] > rank[v]){
+            parent[v] = u;
+        }
+        else{
+            parent[v] = u;
+            rank[u]++;
         }
     }
 
     int findCircleNum(vector<vector<int>>& isConnected) {
         int n = isConnected.size();
-        vector<bool> vis(n,false);
+        int m = isConnected[0].size();
 
-        int provinces = 0;
+        parent.resize(n);
+        rank.assign(n,0);
 
         for(int i=0;i<n;i++){
-            if(!vis[i]){
-                dfs(i,vis,isConnected);
-                provinces++;
+            parent[i]=i;
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(isConnected[i][j] == 1){
+                    unionSet(i,j);
+                }
             }
         }
-        return provinces;
+
+        int cnt=0;
+
+        for(int i=0;i<n;i++){
+            if(parent[i] == i){
+                cnt++;
+            }
+        }
+        return cnt;
     }
 };
