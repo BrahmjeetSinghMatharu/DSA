@@ -1,18 +1,14 @@
 class Solution {
 public:
-    int solve(vector<int>& v,int n){
-        if(n<2) return n;
-
-        // 3. Check
-        if(v[n] != -1) return v[n];
-
-        // 2. Store
-        return v[n] = solve(v,n-1) + solve(v,n-2);
-    }
-
     int fib(int n) {
-        // 1. Declare
-        vector<int> v(n+1,-1);
-        return solve(v,n);
+        if(n<2) return n;
+        vector<int> dp(n+1,-1);
+        dp[0] = 0;
+        dp[1] = 1;
+
+        for(int i=2;i<=n;i++){
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
     }
 };
