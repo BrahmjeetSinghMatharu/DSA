@@ -1,12 +1,18 @@
 class Solution {
 public:
-    unordered_map<int,int> mpp;
-
-    int fib(int n) {
+    int solve(vector<int>& v,int n){
         if(n<2) return n;
 
-        if(mpp.find(n) != mpp.end()) return mpp[n];
+        // 3. Check
+        if(v[n] != -1) return v[n];
 
-        return mpp[n] = fib(n-1) + fib(n-2);
+        // 2. Store
+        return v[n] = solve(v,n-1) + solve(v,n-2);
+    }
+
+    int fib(int n) {
+        // 1. Declare
+        vector<int> v(n+1,-1);
+        return solve(v,n);
     }
 };
