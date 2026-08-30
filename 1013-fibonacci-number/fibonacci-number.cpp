@@ -7,9 +7,6 @@ public:
 
         if(mpp.find(n) != mpp.end()) return mpp[n];
 
-        int res = fib(n-1) + fib(n-2);
-        mpp[n] = res;
-
-        return res;
+        return mpp[n] = fib(n-1) + fib(n-2);
     }
 };
