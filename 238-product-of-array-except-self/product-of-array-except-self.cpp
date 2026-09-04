@@ -1,27 +1,24 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        
         int n = nums.size();
-        vector<int> res(n,0);
 
-        // First Iteration from left to right (for storing the left sum)
+        vector<int> res(n,1);
 
-        int leftProd = 1;
-        res[0] = 1;
+        // Left traversal
+        int left = 1;
 
         for(int i=1;i<n;i++){
-            leftProd = nums[i-1] * leftProd;
-            res[i] = leftProd;
+            left = left * nums[i-1];
+            res[i] = left;
         }
 
-        // Second Iteration from right to left (for storing the right sum)
-
-        int rightProd = 1;
+        // Right traversal
+        int right = 1;
 
         for(int i=n-2;i>=0;i--){
-            rightProd = nums[i+1] * rightProd;
-            res[i] *= rightProd;
+            right = right * nums[i+1];
+            res[i] *= right;
         }
 
         return res;
