@@ -12,10 +12,16 @@
 -- END = 1;
 
 
-SELECT name 
+-- SELECT name 
+-- FROM Customer
+-- WHERE CASE
+--     WHEN referee_id IS NULL THEN TRUE
+--     WHEN referee_id != 2 THEN TRUE
+--     ELSE FALSE
+-- END;
+
+
+
+SELECT name
 FROM Customer
-WHERE CASE
-    WHEN referee_id IS NULL THEN TRUE
-    WHEN referee_id != 2 THEN TRUE
-    ELSE FALSE
-END;
+WHERE COALESCE(referee_id, 0) != 2;
