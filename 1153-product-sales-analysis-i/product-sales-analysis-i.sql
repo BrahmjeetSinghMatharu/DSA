@@ -1,3 +1,10 @@
+-- SELECT 
+-- (SELECT product_name FROM Product WHERE Sales.product_id = Product.product_id) AS product_name,
+-- year,
+-- price
+-- FROM Sales;
+
+
 -- SELECT p.product_name , s.year , s.price
 -- FROM Sales AS s
 -- LEFT JOIN Product AS p
